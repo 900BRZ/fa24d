@@ -1,0 +1,19 @@
+"Format","AIM CSV File"
+"Venue","ThunderhS CA"
+"Vehicle","BRZ"
+"User","Seigo"
+"Data Source","AIM Data Logger"
+"Comment","Stock Tune V730"
+"Date","01/04/25"
+"Time","11:24:35"
+"Sample Rate","50"
+"Duration","119.814"
+"Segment","Lap 2 - 1:59.814"
+
+"Time","Distance","MagnetomX","MagnetomY","MagnetomZ","Internal Battery","InlineAcc","LateralAcc","VerticalAcc","RollRate","PitchRate","YawRate","RPM","PPS","SteerAngle","IMU YAW","BrakePress","SpeedV","WheelSpeedFL","WheelSpeedFR","WheelSpeedRL","WheelSpeedRR","IMU Lateral G","IMU LongG","Clutch","Gear","OilTemp","ECT","Intake Air Temp","OilPressure0","ADC1","ADC2","OilPressure1","GPS_Speed","GPS_Nsat","GPS_LatAcc","GPS_LonAcc","GPS_Slope","GPS_Heading","GPS_Gyro","GPS_Altitude","GPS_PosAccuracy","GPS_SpdAccuracy","GPS_Latitude","GPS_Longitude","GPS_Elevation",
+"Time","Distance","MagnetomX","MagnetomY","MagnetomZ","Internal Battery","InlineAcc","LateralAcc","VerticalAcc","RollRate","PitchRate","YawRate","RPM","PPS","SteerAngle","IMU YAW","BrakePress","SpeedV","WheelSpeedFL","WheelSpeedFR","WheelSpeedRL","WheelSpeedRR","IMU Lateral G","IMU LongG","Clutch","Gear","OilTemp","ECT","Intake Air Temp","OilPressure0","ADC1","ADC2","OilPressure1","GPS_Speed","GPS_Nsat","GPS_LatAcc","GPS_LonAcc","GPS_Slope","GPS_Heading","GPS_Gyro","GPS_Altitude","GPS_PosAccuracy","GPS_SpdAccuracy","GPS_Latitude","GPS_Longitude","GPS_Elevation",
+"sec","km","mG","mG","mG","V","g","g","g","deg/s","deg/s","deg/s","rpm","%","deg","deg/s","PSI","mph","mph","mph","mph","mph","g","g"," ","gear","�F","�F","�F","PSI","mV","mV","PSI","mph","#","g","g","deg","deg","deg/s","m","#","#","�","�","cm",
+"","","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44",
+
+0.000,0.000,-11544.001953,-4002.276367,4787.999512,3.624063,0.979729,0.054807,-2.083355,-2.057120,0.369551,1.272383,6171.439941,100.000000,1.307010,0.340931,0.000000,107.906509,-0.000009,-0.000009,-0.000009,-0.000009,-0.064050,0.095575,0.000000,5.000000,208.399811,193.999664,56.298641,0.000000,9.000000,2567.262451,77.487556,109.322807,19.000000,0.015073,0.111136,0.220107,-179.502914,0.173856,87.175865,1.320000,0.150000,39.539337189941,-122.331190591680,87.18
+0.020,0.003,-11544.001953,-4002.000488,4787.999512,3.624062,0.971210,0.052087,-2.042832,-1.980877,-0.603350,1.246090,6174.467285,100.000000,1.309585,0.296143,0.000000,107.938919,-0.000009,-0.000009,-0.000009,-0.000009,-0.063671,0.094223,0.000000,5.000000,208.399811,193.999664,56.298641,0.000000,9.000000,2566.338135,77.449814,109.347664,19.000000,0.013161,0.111391,0.222399,-179.498322,0.150938,87.180191,1.320000,0.150000,39.539328381834,-122.331190710030,87.18

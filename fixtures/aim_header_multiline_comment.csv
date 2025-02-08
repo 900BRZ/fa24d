@@ -1,0 +1,23 @@
+"Format","AiM CSV File"
+"Session","Sonoma Raceway"
+"Vehicle","2023 GR86 95"
+"Racer","Kevin Schweigert"
+"Championship","SpeedSF Challenge S4"
+"Comment","8th day 235 40R18 SX2
+
+Annex CSP V1 7/8k
+
+Newly Repaved Track"
+"Date","Sunday, March 10, 2024"
+"Time","11:02 AM"
+"Sample Rate","20"
+"Duration","1356"
+"Segment","Session"
+"Beacon Markers","629.768","740.742","852.571","1356"
+"Segment Times","10:29.768","1:50.974","1:51.829","8:23.429"
+
+"Time","GPS Speed","GPS Nsat","GPS LatAcc","GPS LonAcc","GPS Slope","GPS Heading","GPS Gyro","GPS Altitude","GPS PosAccuracy","GPS SpdAccuracy","GPS Radius","GPS Latitude","GPS Longitude","MagnetomX","MagnetomY","MagnetomZ","Internal Battery","External Voltage","InlineAcc","LateralAcc","VerticalAcc","RollRate","PitchRate","YawRate","RPM","PPS","SteerAngle","IMU YAW","BrakePress","SpeedV","WheelSpeedFL","WheelSpeedFR","WheelSpeedRL","WheelSpeedRR","IMU Lateral G","IMU LongG","Clutch","Gear","OilTemp","ECT","Intake Air Temp","OilPressure0","ADC1","ADC2","OilPressure1"
+"s","mph"," ","g","g","deg","deg","deg/s","ft","ft","mph","ft","deg","deg","mG","mG","mG","V","V","g","g","g","deg/s","deg/s","deg/s","rpm","%","deg","deg/s","bar","mph","mph","mph","mph","mph","g","g"," ","gear","°F","°C","°F","psi","mV","mV","psi"
+
+"0.000","0.1304","12","0.0000","0.0000","-7.7337","9.1754","0.0000","-18.3922","0.0348","0.1900","32808.3990","38.15855494","-122.45286804","1233.0","-1233.0","1233.0","4.1","3.1","0.12","-0.06","-0.99","-0.1","0.0","0.1","0","0.00","-18.9","0.5","0","0","0","0","0","0","-0.06","0.00","1","0","206.6","99.0","59.0","25.6","1185","12","0.0"
+"0.050","0.1304","12","0.0000","0.0000","-7.7337","9.1754","0.0000","-18.3922","0.0348","0.1900","32808.3990","38.15855494","-122.45286804","1233.0","-1233.0","1233.0","4.1","3.1","0.12","-0.06","-0.99","-0.1","0.0","0.1","0","0.00","-18.9","0.5","0","0","0","0","0","0","-0.06","0.00","1","0","206.6","99.0","59.0","25.6","1185","12","0.0"
