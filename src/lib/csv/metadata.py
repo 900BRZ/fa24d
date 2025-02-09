@@ -31,8 +31,8 @@ def split_line(s: str) -> list[str]:
     Accepts a variety of different formats, including quoted or unquoted strings and variable columns.
     """
     seen_quote: QuoteType | None = None
-    acc = []
-    current = []
+    acc: list[str] = []
+    current: list[str] = []
 
     for char in s:
         if char == "\n":

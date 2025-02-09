@@ -1,5 +1,5 @@
 from ..aim import AimSessionCsvReader, AimSegmentCsvReader
-
+import numpy as np
 
 SEGMENT_HEADER_CSV = "fixtures/aim_header.csv"
 SESSION_HEADER_CSV = "fixtures/aim_header_multiline_comment.csv"
@@ -29,6 +29,8 @@ def test_segment_reader_read():
     assert len(laps) == 1
     assert laps[0].lap_number == 1
     assert laps[0].lap_time == 0.02
+    assert round(laps[0].data["oil_t"].mean()) == 208  # f
+    assert round(laps[0].data["oil_p"].mean()) == 77  # psi
 
 
 def test_session_reader_read():
@@ -38,4 +40,6 @@ def test_session_reader_read():
     assert len(laps) == 7
     assert laps[0].lap_number == 1
     assert laps[3].lap_number == 4
-    assert laps[3].lap_time == 88.37199999999996
+    assert round(laps[3].lap_time) == 88
+    assert round(laps[0].data["oil_t"].mean()) == 163  # f
+    assert round(laps[0].data["oil_p"].mean()) == 62  # psi

@@ -1,43 +1,11 @@
+import pandas as pd
+import numpy as np
+from typing import Protocol
+
+from ..metadata import parse_metadata, count_metadata_lines
 from ...lap import Lap
 from ...conversions import kpa_to_psi, c_to_f
-
-from abc import ABC, abstractmethod
-from ..metadata import parse_metadata, count_metadata_lines
-import pandas as pd
-
-column_rename_mapping = {
-    "timestamp": "time",
-    "lapnumber": "lap_number",
-    "engineoilpressure1": "oil_p",
-    "oilpressure0": "oil_p",
-    "oilpressure": "oil_p",
-    "oilp": "oil_p",
-    "oiltemp": "oil_t",
-    "engineoiltemp": "oil_t",
-    "oiltemperature": "oil_t",
-    "oilt": "oil_t",
-    "latitude": "gps_lat",
-    "longitude": "gps_lon",
-    "gpslatitude": "gps_lat",
-    "gpslongitude": "gps_lon",
-    "gpslat": "gps_lat",
-    "gpslon": "gps_lon",
-    "gpslng": "gps_lon",
-    "gpslatacc": "gps_lat_acc",
-    "gpslngacc": "gps_lon_acc",
-    "gpslonacc": "gps_lon_acc",
-    "gpslngaccel": "gps_lon_acc",
-    "gpslonaccel": "gps_lon_acc",
-    "lateralacc": "gps_lat_acc",
-    "longitudinalacc": "gps_lon_acc",
-}
-
-
-def column_rename(col_name: str) -> str:
-    s = col_name.lower().replace(" ", "").replace("_", "")
-    if s in column_rename_mapping:
-        return column_rename_mapping[s]
-    return col_name.lower().replace(" ", "_")
+from ....mappings import ColumnMapping
 
 
 columns_to_keep = [
@@ -60,38 +28,44 @@ unit_fn_map = {
 }
 
 
-def normalize_column_names(df: pd.DataFrame) -> pd.DataFrame:
-    return df.rename(columns=column_rename, inplace=False)
-
-
 def drop_irrelevant_columns(df: pd.DataFrame) -> pd.DataFrame:
     return df[columns_to_keep]
 
 
 def normalize_units(df: pd.DataFrame, units: list[str]) -> pd.DataFrame:
-    for col in units:
-        if col not in df.columns:
-            continue
-        df[col] = df[col].apply(unit_fn_map.get(col, lambda x: x))
+    for i, col in enumerate(df.columns):
+        units_for_column = units[i]
+        df[col] = df[col].apply(unit_fn_map.get(units_for_column, lambda x: x))
     return df
 
 
-class CsvReader(ABC):
+def normalized_pressure_drop(actual: float, expected: float) -> float:
+    return min(actual / expected, 1) * 100
+
+
+class CsvReader(Protocol):
+    def can_read(self) -> bool: ...
+    def get_column_mapping(self) -> ColumnMapping: ...
+    def split_laps(self, df: pd.DataFrame) -> list[Lap]: ...
+
     filepath: str
 
     def __init__(self, filepath: str):
         self.filepath = filepath
 
     @property
-    def metadata(self) -> dict:
+    def metadata(self) -> dict[str, str | list[str]]:
         return parse_metadata(self.filepath)
+
+    def normalize_column_names(self, df: pd.DataFrame) -> pd.DataFrame:
+        return df.rename(columns=self.get_column_mapping().reverse_mapping)
 
     def normalize_csv(self, df: pd.DataFrame) -> pd.DataFrame:
         # drop first row if it matches the header row (happens in some AiM files)
         if isinstance(df.iloc[0, 0], str) and df.iloc[0, 0] == df.columns[0]:
             df = df.drop(0).reset_index(drop=True)
 
-        df = normalize_column_names(df)
+        df = self.normalize_column_names(df)
         assert "time" in df.columns, f"Time column not found in {df.columns}"
 
         df = drop_irrelevant_columns(df)
@@ -107,22 +81,30 @@ class CsvReader(ABC):
             df = df.drop(0).reset_index(drop=True)
 
         # normalize data frequency
-        df['time_index'] = pd.to_datetime(df['time'], unit='s')
-        df.set_index("time_index", inplace=True)          
-        df.resample('20ms').mean()
+        df["time_index"] = pd.to_datetime(df["time"], unit="s")
+        df.set_index("time_index", inplace=True)
+        df.resample("50ms").mean()
 
         return df
-
-    @abstractmethod
-    def split_laps(self, df: pd.DataFrame) -> list[Lap]:
-        pass
-
-    @abstractmethod
-    def can_read(self) -> bool:
-        pass
 
     def pre_process_data(self, df: pd.DataFrame) -> pd.DataFrame:
+        raise NotImplementedError("pre_process_data must be implemented")
         return df
+
+    def perform_lap_analysis(self, lap: Lap) -> None:
+        filtered_data = lap.data.query(
+            "gps_lat_acc < 0.3 and rpm > 4500", inplace=False
+        )
+        oil_p_regression_line = np.polyfit(
+            filtered_data["oil_t"], filtered_data["oil_p"], 1
+        )
+        m, b = oil_p_regression_line
+        lap.data = lap.data.copy()
+        lap.data["expected_oil_p"] = m * lap.data["oil_t"] + b
+        lap.data["normalized_oil_p_drop_percent"] = lap.data.apply(
+            lambda row: normalized_pressure_drop(row["oil_p"], row["expected_oil_p"]),
+            axis=1,
+        )
 
     def read(self) -> list[Lap]:
         metadata_lines = count_metadata_lines(self.filepath)
@@ -136,7 +118,10 @@ class CsvReader(ABC):
         )
 
         df = self.pre_process_data(df)
-
         df = self.normalize_csv(df)
+        laps = self.split_laps(df)
 
-        return self.split_laps(df)
+        for lap in laps:
+            self.perform_lap_analysis(lap)
+
+        return laps
