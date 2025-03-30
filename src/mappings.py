@@ -23,6 +23,17 @@ class ColumnMapping:
 # check for racer, check for user, check for racechrono
 
 profiles = {
+    "NoStreetRacing": ColumnMapping(
+        time="Time",
+        rpm="RPM",
+        lap_number="lap_number",
+        oil_p="OilPressure0",
+        oil_t="OilTemp",
+        gps_lat="GPS Latitude",
+        gps_lon="GPS Longitude",
+        gps_lat_acc="GPS LatAcc",
+        gps_lon_acc="GPS LonAcc",
+    ),
     "Brian Armstrong": ColumnMapping(
         time="Time",
         rpm="RPM",
@@ -60,7 +71,7 @@ profiles = {
         time="timestamp",
         rpm="rpm",
         lap_number="lap_number",
-        oil_p="engine_oil_pressure_1",
+        oil_p="engine_oil_pressure",
         oil_t="engine_oil_temp",
         gps_lat="latitude",
         gps_lon="longitude",

@@ -1,0 +1,3 @@
+2025-03-09 11:05:04,689 [PID 35379] INFO No binary specified, looking for `pyre.bin` in PATH
+2025-03-09 11:05:04,690 [PID 35379] INFO Pyre binary is located at `/Users/brianarmstrong/Developer/900BRZ/fa24d/.venv/bin/pyre.bin`
+2025-03-09 11:05:04,690 [PID 35379] ERROR Invalid configuration: Cannot find any source files to analyze. Either `source_directories` or `targets` must be specified.

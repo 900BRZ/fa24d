@@ -88,7 +88,9 @@ class CsvReader(Protocol):
         return df
 
     def pre_process_data(self, df: pd.DataFrame) -> pd.DataFrame:
-        raise NotImplementedError("pre_process_data must be implemented")
+        return df
+
+    def post_process_data(self, df: pd.DataFrame) -> pd.DataFrame:
         return df
 
     def perform_lap_analysis(self, lap: Lap) -> None:
@@ -119,6 +121,8 @@ class CsvReader(Protocol):
 
         df = self.pre_process_data(df)
         df = self.normalize_csv(df)
+        df = self.post_process_data(df)
+
         laps = self.split_laps(df)
 
         for lap in laps:

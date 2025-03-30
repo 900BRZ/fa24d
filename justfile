@@ -17,9 +17,13 @@ check: check-black check-mypy
 check-black:
   poetry run black --check .
 
-# Check types
+# Check types (mypy)
 check-mypy:
   poetry run mypy .
+
+# Check types (pyre)
+check-pyre:
+  poetry run pyre check
 
 # Run tests
 test +args=".":
@@ -27,8 +31,14 @@ test +args=".":
 
 # Compare two data files, with the first being the baseline and the second being the experiment
 compare +args:
-  poetry run python src/compare.py "$@"
+  poetry run python -m src.compare "$@"
+
+inspect +args:
+  poetry run python -m src.inspect "$@"
 
 # View a single data file
 view +args:
-  poetry run python src/view.py "$@"
+  poetry run python -m src.view "$@"
+
+dev:
+  poetry run fastapi dev src/main.py

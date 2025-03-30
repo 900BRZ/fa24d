@@ -19,6 +19,11 @@ class RaceChronoCsvReader(CsvReader):
         # remove update frequency line
         return df[df.iloc[:, 0].notna()]
 
+    def post_process_data(self, df):
+        df["gps_lat_acc"] = df["gps_lat_acc"].apply(lambda x: -x)
+        return df
+
+
     def split_laps(self, df: pd.DataFrame) -> list[Lap]:
         laps = []
         grouped = df.groupby("lap_number")
